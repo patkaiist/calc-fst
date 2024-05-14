@@ -54,7 +54,7 @@ function generateSegmentVariations(segment) {
 }
 ```
 
-The `cleanOutput()` function handles some redundancy created by the replacements. For example <ny> and <ni> and <nyi> may all occur in non-standard spellings, but <ny> converted to <ni> before <i> results in <nii>, which cannot occur. These replacements are language specific.
+The `cleanOutput()` function handles some redundancy created by the replacements. For example <ny> and <ni> and <nyi> may all occur in non-standard spellings, but <ny> converted to \<ni\> before \<i\> results in \<nii\>, which cannot occur. These replacements are language specific.
 
 ```javascript
 function cleanOutput(input) {
