@@ -57,7 +57,25 @@ let term = 'nyou.pan'
 term = term.replace(/'/g, "’").replace(/[^a-zA-Z'’.%]/g, "")
 
 // then convert digraphs to single glyphs
-let temp_term = term.replace(/ny/g,"ɲ").replace(/ni/g,"ɲ").replace(/ou/g,"ʊ")
+let temp_term = term.replace(/ng|ny|ni|sh|si|ch|chh|j/g, function(match) {
+    switch(match) {
+        case 'chh':
+            return 'ç';
+        case 'ch':
+        case 'j':
+            return 'ʧ';
+        case 'ng':
+            return 'ŋ';
+        case 'ny':
+        case 'ni':
+            return 'ɲ';
+        case 'sh':
+        case 'si':
+            return 'ʃ';
+        default:
+            return match;
+    }
+});
 
 // create the array of valid search terms
 let output = generateVariations(temp_term);
