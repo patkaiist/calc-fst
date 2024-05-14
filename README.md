@@ -14,14 +14,13 @@ const replacements = {
 };
 ```
 
-Then, this object is used to iterate over the given search term to generate all possible acceptable spelling alternatives.
+Then, this object is used to iterate over the given search term to generate all possible acceptable spelling alternatives. We also split by morpheme, again due to language-specific features, but keep the full stop for recombining terms later.
 
 ```javascript
 function generateVariations(input) {
     if (!input || input.length === 0) {
         return [""];
     }
-    // we split by morpheme, but keep the full stop for recombining terms later
     const segments = input.replace(/\./g, '.·').split('·');
     let variations = [''];
     for (const segment of segments) {
@@ -54,7 +53,24 @@ function generateSegmentVariations(segment) {
     return variations;
 }
 ```
-Another function is used to undo the digraph reduction
+
+The `cleanOutput()` function handles some redundancy created by the replacements. For example <ny> and <ni> and <nyi> may all occur in non-standard spellings, but <ny> converted to <ni> before <i> results in <nii>, which cannot occur. These replacements are language specific.
+
+```javascript
+function cleanOutput(input) {
+    return input.replace(/ii|iu/g, function(match) {
+        switch (match) {
+            case 'ii':
+                return 'i';...
+            default:
+                return match;
+        }
+    });
+}
+```
+
+
+Another function is used to undo the digraph reduction.
 
 ```javascript
 function replaceWithFirst(variant) {
@@ -80,7 +96,25 @@ term = term.replace(/'/g, "’").replace(/[^a-zA-Z'’.%]/g, "")
 Then digraphs are reduced.
 
 ```javascript
-let temp_term = term.replace(/ny/g,"ɲ").replace(/ni/g,"ɲ").replace(/ou/g,"ʊ")
+term = term.replace(/ng|ny|ni|sh|si|ch|chh|j/g, function(match) {
+    switch(match) {
+        case 'chh':
+            return 'ç';
+        case 'ch':
+        case 'j':
+            return 'ʧ';
+        case 'ng':
+            return 'ŋ';
+        case 'ny':
+        case 'ni':
+            return 'ɲ';
+        case 'sh':
+        case 'si':
+            return 'ʃ';
+        default:
+            return match;
+    }
+});
 ```
 
 An array of all possible variants is then created using our functions above, which we then also filter to remove duplicate values, and sort alphabetically.
@@ -89,7 +123,6 @@ An array of all possible variants is then created using our functions above, whi
 let output = generateVariations(temp_term);
 output = output.filter((item, index) => output.indexOf(item) === index);
 output = output.slice().sort();
-
 ```
 
 Then, the SQLite query can be built by iterating over these elements. In this example we are only search through headwords, but in the full dictionary we also include searches for definitions, a field for alternate spellings which don't follow the principles above, or any other relevant field which may contain lexical data.
