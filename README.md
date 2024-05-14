@@ -4,7 +4,7 @@ This repository represents a minimal working example of the finite state transdu
 
 ## Structure
 
-First an object is given which shows all possible replacements. The key for each item must be a single glyph. We convert digraphs to these futher down.
+First an object is given which shows all possible replacements. The key for each item must be a single glyph. We convert digraphs to these further down.
 
 ```javascript
 const replacements = {
