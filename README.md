@@ -128,7 +128,6 @@ output = output.slice().sort();
 Then, the SQLite query can be built by iterating over these elements. In this example we are only search through headwords, but in the full dictionary we also include searches for definitions, a field for alternate spellings which don't follow the principles above, or any other relevant field which may contain lexical data.
 
 ```javascript
-// build the query
 let query = 'SELECT * FROM `table` WHERE ('
 for (let i =0; i < output.length; i++) {
     query += '`headword` LIKE "' + output[i] + '"';
@@ -141,9 +140,6 @@ query += ') ORDER BY `headword` ASC LIMIT 25;';
 Finally, for the purposes of the minimal working example, the spellings and query are logged to the console.
 
 ```javascript
-// log all possible spellings
 console.log(output)
-
-// log the prepared example query
 console.log(query)
 ```
