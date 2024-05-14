@@ -1,6 +1,6 @@
 # calc-fst
 
-This repository represents a minimal working example of the finite state transducer based fuzzy spelling search. It is part of the paper _Implementing Fuzzy Spelling Search in Dictionaries of Under-Described Languages Lacking Standard Orthographies_ in the journal  [Computer-Assisted Language Comparison in Practice](https://calc.hypotheses.org/). A JSFiddle [demo is available here](https://jsfiddle.net/patkaiist/4f16rqtb/1/).
+This repository represents a minimal working example of a simple finite state transducer based fuzzy spelling search. It is part of the paper _Implementing Fuzzy Spelling Search in Dictionaries of Under-Described Languages Lacking Standard Orthographies_ in the journal  [Computer-Assisted Language Comparison in Practice](https://calc.hypotheses.org/). A JSFiddle [demo is available here](https://jsfiddle.net/patkaiist/4f16rqtb/1/).
 
 ## Structure
 
